@@ -7,7 +7,7 @@ import random
 from flask import Flask, request
 
 #TOKEN VA BOTNI QURISH
-TOKEN = os.getenv("BOT_TOKEN") 
+TOKEN = os.environ("BOT_TOKEN") 
 app = Flask(__name__)
 
 bot = telebot.TeleBot(TOKEN)
@@ -316,5 +316,5 @@ def temalar_chiqarish(call):
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="next_emo")
 		)
 		bot.send_message(call.message.chat.id, f"Paket nomi {emo['name']}", reply_markup=theme_btn)
-
-bot.infinity_polling()
+bot.remove_webhook()
+bot.set_webhook(url="https://https://tema-xizmat-bot.onrender.com/webhook")
