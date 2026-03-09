@@ -7,7 +7,7 @@ import random
 from flask import Flask, request
 
 #TOKEN VA BOTNI QURISH
-TOKEN = "8302804985:AAGyvvWoO7w9IFgE61SWbiIxNaSyO5__0tc"
+TOKEN = os.getenv("BOT_TOKEN") 
 app = Flask(__name__)
 
 bot = telebot.TeleBot(TOKEN)
