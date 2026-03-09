@@ -1,13 +1,24 @@
 #IMPORTLAR
+import os
 import telebot
 from telebot import types
 import json
 import random
+from flask import Flask, request
 
 #TOKEN VA BOTNI QURISH
 TOKEN = "8302804985:AAGyvvWoO7w9IFgE61SWbiIxNaSyO5__0tc"
+app = Flask(__name__)
 
 bot = telebot.TeleBot(TOKEN)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    json_str = request.get_data().decode('UTF-8')
+    update = telebot.types.Update.de_json(json_str)
+    bot.process_new_updates([update])
+    return "ok"
+
 #START COMMAND
 @bot.message_handler(commands=["start"])
 def salomlash(message):
