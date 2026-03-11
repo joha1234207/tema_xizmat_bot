@@ -7,9 +7,10 @@ import random
 from flask import Flask, request
 
 #TOKEN VA BOTNI QURISH
+admin = 7789281265
 TOKEN = os.environ["BOT_TOKEN"]
-app = Flask(__name__)
 
+app = Flask(__name__)
 bot = telebot.TeleBot(TOKEN)
 
 @app.route('/webhook', methods=['POST'])
@@ -19,12 +20,20 @@ def webhook():
     bot.process_new_updates([update])
     return "ok"
 
+
 #START COMMAND
 @bot.message_handler(commands=["start"])
 def salomlash(message):
+	
+	#ADMIN PANEL
+	if message.chat.id == admin:
+		bot.send_message(message.chat.id, "Admin panel\n\nPanel ver: 1.0\n\nBot ver: 2.0\n\nSalom Joha qachon admin panelni yangilaymiz")
+		
+		#ADMINGA XABAR YUBORISH
+	bot.send_message(admin, f"Botga yangi foydalanuvchi kirdi\n\nUsername: @{message.from_user.username}")
+	
+	#FUNKSIYALAR TUGMASI
 	user_panel = types.ReplyKeyboardMarkup(resize_keyboard=True)
-	
-	
 	temalar = types.KeyboardButton("Temalar🎆")
 	shrift = types.KeyboardButton("Ilova tili😅")
 	stikerlar = types.KeyboardButton("Emodzi❤")
@@ -32,7 +41,9 @@ def salomlash(message):
 	user_panel.add(temalar)
 	user_panel.row(shrift, stikerlar)
 	
-	bot.reply_to(message, "👋 Xush kelibsiz!\n\n🎨Bu bot orqali turli xil chiroyli Telegram temalarini topishingiz mumkin.\n\n📥 Temani tanlang va oʻrnatib oling.\n\n⚡ Yangi temalar doimiy qo‘shib boriladi.\n\n👇 Boshlash uchun quyidagi tugmalardan foydalaning.", reply_markup=user_panel)
+	bot.reply_to(message, f"👋 Xush kelibsiz! {message.from_user.first_name}\n\n🎨Bu bot orqali turli xil chiroyli Telegram temalarini topishingiz mumkin.\n\n📥 Temani tanlang va oʻrnatib oling.\n\n⚡ Yangi temalar doimiy qo‘shib boriladi.\n\n👇 Boshlash uchun quyidagi tugmalardan foydalaning.", reply_markup=user_panel)
+	
+	
 
 #HELP COMMAND
 @bot.message_handler(commands=["help"])
@@ -53,6 +64,7 @@ def help(message):
 def tanlash_tugmalari(message):
 	inline_key = types.InlineKeyboardMarkup(row_width=2)
 	
+	#TEMALAR TUGMASI BOSILGANDA
 	if message.text == "Temalar🎆":
 		inline_key.add(
 			types.InlineKeyboardButton(
@@ -72,6 +84,8 @@ def tanlash_tugmalari(message):
 				callback_data="boshqa")
 		)
 		bot.send_message(message.chat.id, "Qaysi turdagi temalar kerak", reply_markup=inline_key)
+		
+		#TILLAR UCHUN
 	elif message.text == "Ilova tili😅":
 		with open("langs.json", "r") as f:
 			langs = json.load(f)
@@ -84,6 +98,8 @@ def tanlash_tugmalari(message):
 			types.InlineKeyboardButton("Keyingisi⏭️", callback_data="next_lang")
 		)
 		bot.send_message(message.chat.id, f"{lang['name']} — Tili👅", reply_markup=inline_key)
+		
+		#EMODZILAR TUGMASI
 	elif message.text == "Emodzi❤":
 		with open("emodzi.json", "r") as f:
 			emodzi = json.load(f)
@@ -95,6 +111,8 @@ def tanlash_tugmalari(message):
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="next_emo")
 		)
 		bot.send_message(message.chat.id, f"Paket nomi {emo['name']}", reply_markup=inline_key)
+		
+		#ERROR XATOLKINI YECHISH
 	else:
 		bot.send_message(message.chat.id, "ERROR☹️\n\nHatolikni yechish yoʻllari☺\n\n1⃣ - /start bilan botni yangilang\nn2⃣ - Pastdagi tugmalarni ishlating")
 
@@ -118,35 +136,35 @@ def temalar_chiqarish(call):
 			types.InlineKeyboardButton("IOS🍏", callback_data="iosdark"),
 			types.InlineKeyboardButton("Android🤖", callback_data="andark")
 		)
-		bot.send_message(call.message.chat.id, "Dark tema zoʻr👍\n\nPaltformani tanlang", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, "🖤Dark tema zoʻr👍\n\nPaltformani tanlang", reply_markup=theme_btn)
 		
 	#ANDROID DARK TEMALAR
 	elif call.data == "andark":
 		kategory = android["dark"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton(f" Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="andark")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	#IOS DARK TEMALAR
 	elif call.data == "iosdark":
 		kategory = ios["dark"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="iosdark")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	#ANIME ANDROID AND IOS
 	elif call.data == "anime":
@@ -161,28 +179,28 @@ def temalar_chiqarish(call):
 		kategory = android["anime"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="andanim")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	#IOS ANIME TEMA
 	elif call.data == "iosanim":
 		kategory = ios["anime"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="iosanim")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	#ANIDORID YOKI IOS ANIMALS
 	elif call.data == "animals":
@@ -190,107 +208,107 @@ def temalar_chiqarish(call):
 			types.InlineKeyboardButton("IOS🍏", callback_data="iosanimals"),
 			types.InlineKeyboardButton("Android🤖", callback_data="andanimals")
 		)
-		bot.send_message(call.message.chat.id, "Anime temalar💖\n\nPlatformani tanlang😊", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, "🐱Hayvonchalar stilidagi temalar\n\nPlatformani tanlang😊", reply_markup=theme_btn)
 	
 	#ANDROID ANIMALS TEMA YUBORISH
 	elif call.data == "andanimals":
 		kategory = android["animals"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="andanimals")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
-	#IOS ANIME TEMA
+	#IOS ANIMALS TEMA
 	elif call.data == "iosanimals":
 		kategory = ios["animals"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton(f"Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="iosanimals")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 	
-	#ANIDORID YOKI IOS ANIMALS
+	#ANIDORID YOKI IOS SOFT
 	elif call.data == "soft":
 		theme_btn.add(
 			types.InlineKeyboardButton("IOS🍏", callback_data="iossoft"),
 			types.InlineKeyboardButton("Android🤖", callback_data="andsoft")
 		)
-		bot.send_message(call.message.chat.id, "Anime temalar💖\n\nPlatformani tanlang😊", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, "🤍Soft Tanlandi\n\nPlatformani tanlang😊", reply_markup=theme_btn)
 	
-	#ANDROID ANIMALS TEMA YUBORISH
+	#ANDROID SOFT TEMA YUBORISH
 	elif call.data == "andsoft":
 		kategory = android["soft"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
-			types.InlineKeyboardButton("Keyingisi⏩", callback_data="andb")
+			types.InlineKeyboardButton("Keyingisi⏩", callback_data="andsoft")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	#IOS ANIME TEMA
 	elif call.data == "iossoft":
 		kategory = ios["soft"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="iossoft")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
-	#ANIDORID YOKI IOS ANIMALS
+	#ANIDORID YOKI IOS BOSHQA TEMALAR
 	elif call.data == "boshqa":
 		theme_btn.add(
 			types.InlineKeyboardButton("IOS🍏", callback_data="iosb"),
 			types.InlineKeyboardButton("Android🤖", callback_data="andb")
 		)
-		bot.send_message(call.message.chat.id, "Anime temalar💖\n\nPlatformani tanlang😊", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, "Boshqa temalar💟\n\nPlatformani tanlang😊", reply_markup=theme_btn)
 		
-	#ANDROID ANIMALS TEMA YUBORISH
+	#ANDROID BOSHQA TEMA YUBORISH
 	elif call.data == "andb":
 		kategory = android["boshqa"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="andb")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	#IOS ANIMALS TEMA
 	elif call.data == "iosb":
 		kategory = ios["boshqa"]
 		theme = random.choice(kategory)
 		theme_btn.add(
-			types.InlineKeyboardButton(f"🌌 Tema: {theme['theme']}", url=theme["link"])
+			types.InlineKeyboardButton("Oʻrnatish📲", url=theme["link"])
 		)
 		theme_btn.add(
 			kanal_btn,
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="iosb")
 		)
 		
-		bot.send_message(call.message.chat.id, "Temani koʻrish uchun pastdagi tugmani ishlating💕", reply_markup=theme_btn)
+		bot.send_message(call.message.chat.id, f"Temani koʻrish uchun pastdagi tugmani ishlating💕\n\n🌌Tema: {theme['theme']}", reply_markup=theme_btn)
 		
 	elif call.data == "next_lang":
 		with open("langs.json", "r") as f:
@@ -322,3 +340,5 @@ if __name__ == "__main__":
     bot.remove_webhook()
     bot.set_webhook(url="https://tema-xizmat-bot.onrender.com/webhook")
     app.run(host="0.0.0.0", port=8080)
+
+#bot.infinity_polling()
