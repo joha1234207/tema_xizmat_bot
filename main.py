@@ -10,6 +10,7 @@ from flask import Flask, request
 admin = 7789281265
 TOKEN = os.environ["BOT_TOKEN"]
 
+#TOKEN = "8083599108:AAF9MJjn-lppxhzSSJ46X30bNSBNS1XSZiM"
 app = Flask(__name__)
 bot = telebot.TeleBot(TOKEN)
 
@@ -27,10 +28,10 @@ def salomlash(message):
 	
 	#ADMIN PANEL
 	if message.chat.id == admin:
-		bot.send_message(message.chat.id, "Admin panel\n\nPanel ver: 1.0\n\nBot ver: 2.0\n\nSalom Joha qachon admin panelni yangilaymiz")
+		bot.send_message(message.chat.id, "Admin panel\n\nPanel ver: 1.1\n\nBot ver: 2.0\n\nSalom Joha qachon admin panelni yangilaymiz")
 		
 		#ADMINGA XABAR YUBORISH
-	bot.send_message(admin, f"Botga yangi foydalanuvchi kirdi\n\nUsername: @{message.from_user.username}")
+	bot.send_message(admin, f"Botga yangi foydalanuvchi kirdi\n————————————\n•Link: @{message.from_user.username}\n\n•Nomi: {message.from_user.first_name}\n\nID:{message.chat.id}")
 	
 	#FUNKSIYALAR TUGMASI
 	user_panel = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -83,7 +84,10 @@ def tanlash_tugmalari(message):
 				"Boshqa💔",
 				callback_data="boshqa")
 		)
-		bot.send_message(message.chat.id, "Qaysi turdagi temalar kerak", reply_markup=inline_key)
+		if message.chat.id == admin:
+			bot.send_message(admin, f"Botda aktivlik temalar\n\n•link: @{message.from_user.username}\n\n•Nomi: {message.from_user.first_name}")
+			
+		bot.send_message(message.chat.id, "🌌Qaysi turdagi temalar kerak", reply_markup=inline_key)
 		
 		#TILLAR UCHUN
 	elif message.text == "Ilova tili😅":
@@ -97,7 +101,12 @@ def tanlash_tugmalari(message):
 		inline_key.add(
 			types.InlineKeyboardButton("Keyingisi⏭️", callback_data="next_lang")
 		)
-		bot.send_message(message.chat.id, f"{lang['name']} — Tili👅", reply_markup=inline_key)
+		
+		if message.chat.id == admin:
+			bot.send_message(admin, f"Botda aktivlik Tillar\n\n•link: @{message.from_user.username}\n\n•Nomi: {message.from_user.first_name}")
+		
+		bot.send_message(message.chat.id, f"👅 Til nomi: ''{lang['name']}''", reply_markup=inline_key)
+		
 		
 		#EMODZILAR TUGMASI
 	elif message.text == "Emodzi❤":
@@ -110,7 +119,11 @@ def tanlash_tugmalari(message):
 		inline_key.add(
 			types.InlineKeyboardButton("Keyingisi⏩", callback_data="next_emo")
 		)
-		bot.send_message(message.chat.id, f"Paket nomi {emo['name']}", reply_markup=inline_key)
+		
+		if message.chat.id == admin:
+			bot.send_message(admin, f"Botda aktivlik Emodzilar\n\n•link: @{message.from_user.username}\n\n•Nomi: {message.from_user.first_name}")
+		
+		bot.send_message(message.chat.id, f"Paket nomi: ''{emo['name']}''", reply_markup=inline_key)
 		
 		#ERROR XATOLKINI YECHISH
 	else:
@@ -341,4 +354,4 @@ if __name__ == "__main__":
     bot.set_webhook(url="https://tema-xizmat-bot.onrender.com/webhook")
     app.run(host="0.0.0.0", port=8080)
 
-#bot.infinity_polling()
+bot.infinity_polling()
