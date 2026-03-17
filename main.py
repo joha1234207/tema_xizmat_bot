@@ -8,11 +8,15 @@ from flask import Flask, request
 
 #TOKEN VA BOTNI QURISH
 admin = 7789281265
-TOKEN = os.environ["BOT_TOKEN"]
+TOKEN = os.environ["BOT_TOKEN"
 
-#TOKEN = "8083599108:AAF9MJjn-lppxhzSSJ46X30bNSBNS1XSZiM"
 app = Flask(__name__)
 bot = telebot.TeleBot(TOKEN)
+
+# ✅ UptimeRobot uchun (GET)
+@app.route("/", methods=['GET'])
+def home():
+    return "Bot ishlayapti"
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -354,4 +358,4 @@ if __name__ == "__main__":
     bot.set_webhook(url="https://tema-xizmat-bot.onrender.com/webhook")
     app.run(host="0.0.0.0", port=8080)
 
-bot.infinity_polling()
+#bot.infinity_polling()
