@@ -8,7 +8,7 @@ from flask import Flask, request
 
 #TOKEN VA BOTNI QURISH
 admin = 7789281265
-TOKEN = os.environ["BOT_TOKEN"
+TOKEN = os.environ["BOT_TOKEN"]
 
 app = Flask(__name__)
 bot = telebot.TeleBot(TOKEN)
