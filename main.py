@@ -36,7 +36,7 @@ funksiyalar.funksiyalar(bot, admin)
 
 
 # LOCAL TEST UCHUN (telefon yoki Pydroid)
-if __name__ == "__main__":
+#if __name__ == "__main__":
     # Agar local test qilmoqchi bo'lsang polling ishlaydi
 #    bot.remove_webhook()
 #    bot.infinity_polling()
