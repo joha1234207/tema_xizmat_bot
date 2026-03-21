@@ -9,7 +9,7 @@ import time
 def funksiyalar(bot, admin):
     
     user_state = {}
-    TIMEOUT = 10
+    TIMEOUT = 1000
     
     #CLEANER
     def timeout(user_id):
