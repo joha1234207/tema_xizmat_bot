@@ -1,7 +1,6 @@
-import os
 
 admin = 7789281265
 #TOKEN = os.environ["BOT_TOKEN"]
 
-TOKEN = os.environ["BOT_TOKEN"]
-#TOKEN = "8083599108:AAF9MJjn-lppxhzSSJ46X30bNSBNS1XSZiM"
+#TOKEN = os.environ["BOT_TOKEN"]
+TOKEN = "8083599108:AAF9MJjn-lppxhzSSJ46X30bNSBNS1XSZiM"

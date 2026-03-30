@@ -5,6 +5,8 @@ import json
 import random
 import tugmalar
 import time
+import defs
+from language import get_lang
 
 def funksiyalar(bot, admin):
     
@@ -26,12 +28,12 @@ def funksiyalar(bot, admin):
     #OS TANLASH DEF
     def os_choicer(id):
     	
-    	bot.send_message(id, "<b>❗ PLATFORMANI TANLANG</b>", reply_markup=tugmalar.and_ios, parse_mode="HTML")
+    	msg = bot.send_message(id, get_lang(id, 'platform_choice'), reply_markup=tugmalar.and_ios, parse_mode="HTML")
     	
     #KAT TANLASH
     def kat_choicer(id):
     	
-    	bot.send_message(id, "<b>🔠 KATEGORIYANI TANLANG</b>", reply_markup=tugmalar.kat_btns, parse_mode="HTML")
+    	bot.send_message(id, get_lang(id, "kat_choice"), reply_markup=tugmalar.kat_btns, parse_mode="HTML")
     
     #LINK YUBORISH
     def send_link(id):
@@ -53,7 +55,7 @@ def funksiyalar(bot, admin):
         link = random.choice(data[os][kat])
         panel = tugmalar.user_panel(link)
         	
-        bot.send_message(id, f"<b>{kat}\nSTYLEDAGI TEMA\n\nOʻRNATISH📲\nTUGMASI ORQALI OʻRNATIB OLING</b>", reply_markup=panel, parse_mode="HTML")
+        bot.send_message(id, f"<b>{kat}\n{get_lang(id, 'theme_kat')}</b>", reply_markup=panel, parse_mode="HTML")
     
     
     #REPLY COMMANDS
@@ -86,36 +88,20 @@ def funksiyalar(bot, admin):
         username = f"@{message.from_user.username}" if message.from_user.username else "username yoʻq"
         
         #TEMALAR
-        if message.text == "📂 Temalar":
+        if message.text == "🎨 THEMES":
         	
         	bot.send_message(admin, f"Botda aktivlik temalar\n\n•link: {username}\n•Nomi: {message.from_user.first_name}")
         	
         	os_choicer(message.chat.id)
         
         #MAHFIY BÓLIM
-        elif message.text == "🔐 Maxfiy bo‘lim":
+        elif message.text == "🔐 PRIVATE":
         	
-        	bot.send_message(message.chat.id, """<b>🔥 BOT VERSION 4.0 – YAQINDA 🔥
-        	
-🚀 KUTILAYOTGAN YANGI FUNKSIYA: 1 TA RASMDAN THEME YARATISH
-        	
-📸 VERSION 4.0 DA SIZ FAQAT BITTA RASM YUBORASIZ…
-⚡ BOT ESA UNI AVTOMATIK TARZDA CHIROYLI THEME GA AYLANTIRADI
-
-🎨 RASM RANGLARI ANALIZ QILINADI
-🧠 ENG MOS DIZAYN TANLANADI
-✨ VA NATIJADA TAYYOR, PROFESSIONAL THEME YARATILADI
-
-💡 HAMMASI SODDA VA QULAY
-⏱ BARCHASI BIR NECHA SONIYADA ISHLAYDI
-
-YARATISH IMKONIYATI
-🚀 VERSION 4.0 BILAN YANGI DARAJAGA CHIQING
-        	</b>""", parse_mode="HTML")
+        	bot.send_message(message.chat.id, get_lang(message.chat.id, "sekret"), parse_mode="HTML")
         
         #BOSHQA NARSA YOZILSA
         else:
-            bot.send_message(message.chat.id, "<b>👾 ERROR 👾\n\n1⃣ ILTIMOS PASTDAGI TUGMALARDAN FOYDALANING\n\n2⃣ /start BILAN BOTNI YANGILANG</b>", parse_mode="HTML")
+            bot.send_message(message.chat.id, "⚡ Salom! Bot yangilanishi mavjud.\n\n Iltimos, davom etish uchun <b>/start</b> tugmasini bosing ✅\n\n\n⚡ Салом! Навсозии бот дастрас аст. Лутфан барои идом додан тугмаи <b>/start</b> ро пахш кунед ✅\n\n\n⚡ Привет! Доступно обновление бота. Пожалуйста, нажмите кнопку <b>start</b> для продолжения ✅\n\n\n⚡ Hello! A bot update is available. Please press the <b>start</b> button to continue ✅",parse_mode="HTML")
     
     #CALBACK FUNKSIYALAR
     @bot.callback_query_handler(func=lambda call: True)
@@ -168,15 +154,10 @@ YARATISH IMKONIYATI
         
         #AKTIVLARGA REKLAMA
         elif call.data == "reklama":
-        	for id in user_state:
-        		bot.send_message(id, """<b>
-🚀 BOTNI YANADA ZO‘R QILISHGA YORDAM BERING!
-
-😎 DO‘STLARINGIZNI TAKLIF 
-QILING
-🔥 VA BIRGA FOYDALANING
-📸 YAQINDA: 1 TA RASMDAN THEME YARATISH FUNKSIYASI!
-
-👇 HOZIRDO‘Q DO‘STLARINGIZGA YUBORING
-<a href="https://t.me/temelar_bot">CLICK</a>
-        	</b>""", parse_mode="HTML")
+        	defs.reklama(bot)
+        		
+        elif call.data in tugmalar.langs:
+        	defs.lang_update(bot, user_id, call.data)
+        
+        elif call.data == "back":
+        	kat_choicer(user_id)

@@ -1,0 +1,25 @@
+{   
+    "yana_qaytdi": "<b>👋 Yana qaytdingiz!\n\nBot allaqachon ishga tushgan ✅\n\nKerakli bo‘limni tanlang 👇</b>",
+    
+    "not_admmin": "Siz admin emassiz😅",
+    
+    "bot_news": "📻 BOT YANGILIKLARI", 
+    
+    "oboi": "🌅 OBOILAR",
+    
+    "help": "<b>🤖 Bot haqida\n\n🎨 Ushbu bot Telegram uchun eng chiroyli va sifatli temalarni jamlagan maxsus botdir.\n\n📂 Bot ichida siz turli xil kategoriyadagi temalarni topishingiz mumkin:\n\n🖤 Dark — zamonaviy va qorong‘i uslubdagi temalar\n\n💖 Anime — anime uslubidagi chiroyli dizaynlar\n\n🐯 Hayvonchalar — hayvon rasmlari bilan bezatilgan temalar\n\n🤍 Soft — ko‘zga yoqimli va yumshoq rangli temalar\n\n💔 Boshqa — noodatiy va kreativ temalar\n\n⚡ Botga doimiy ravishda yangi temalar qo‘shib boriladi.\n\n📢 Eng yangi temalar va bot yangiliklarini birinchi bo‘lib olish uchun kanalimizga obuna bo‘ling!</b>",
+    
+    "platform_choice": "<b>❗ PLATFORMANI TANLANG</b>",
+    
+    "kat_choice": "<b>🔠 KATEGORIYANI TANLANG</b>",
+    
+    "theme_kat": "STYLEDAGI TEMA\n\nOʻRNATISH📲 TUGMASI ORQALI OʻRNATIB OLING",
+    
+    "sekret": "<b>⏳ Tez kunda</b>",
+    
+    "error": "<b>👾 ERROR 👾\n\n1⃣ ILTIMOS PASTDAGI TUGMALARDAN FOYDALANING\n\n2⃣ /start BILAN BOTNI YANGILANG</b>",
+    
+    "rek": "🔥 Buni ko‘rganlar yashirib yuradi…\n\nSiz ham sinab ko‘ring va do‘stlaringizga yuboring 😏👇",
+    
+    "lang_update": "<b>🌍 Til muvaffaqiyatli o‘zgartirildi!\n\nEndi bot sizga tanlangan tilda xizmat qiladi 😊</b>"
+}

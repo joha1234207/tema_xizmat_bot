@@ -1,17 +1,26 @@
 #Tugmalar 
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+import urllib.parse
+from language import get_lang
 
 reply_kategories = [
-	"📂 Temalar",
-	"🔐 Maxfiy bo‘lim"
+	"🎨 THEMES",
+	"🔐 PRIVATE"
 ]
 
 kategoriyalar = [
-	"DARK🖤",
-	"ANIME💖",
-	"HAYVONCHALAR🐶",
-	"SOFT🤍",
-	"BOSHQA❤"
+	"🖤 DARK",
+	"🎌 ANIME",
+	"🐾 ANIMALS",
+	"🌸 SOFT",
+	"🔥 MORE"
+]
+
+langs = [
+	"🇷🇺 РУССКИЙ 🇷🇺",
+	"🇲🇾 ENGLISH 🇲🇾",
+	"🇺🇿 UZBEK 🇺🇿",
+	"🇹🇯 ТОҶИКӢ 🇹🇯"
 ]
 
 #ADMIN TUGMALARI
@@ -43,9 +52,9 @@ def user_panel(link):
 	
 	kb = InlineKeyboardMarkup()
 	
-	next_btn = InlineKeyboardButton("⏭️ KEYINGISI", callback_data="next")
-	news_btn = InlineKeyboardButton("📻 BOT NEWS", url="https://t.me/jahongi_studi010")
-	inst_btn = InlineKeyboardButton("OʻRNATISH📲", url=f"{link}")
+	next_btn = InlineKeyboardButton("⏭️", callback_data="next")
+	news_btn = InlineKeyboardButton("KATEGORIES", callback_data="back")
+	inst_btn = InlineKeyboardButton("📲", url=f"{link}")
 	
 	kb.add(inst_btn)
 	kb.row(news_btn, next_btn)
@@ -59,3 +68,30 @@ and_btn = InlineKeyboardButton("🤖ANDROID", callback_data="android")
 ios_btn = InlineKeyboardButton("🍏IOS", callback_data="ios")
 
 and_ios.row(ios_btn, and_btn)
+
+#LANG BUTTONS
+langs_btn = InlineKeyboardMarkup(row_width=2)
+
+btns = []
+
+for i in langs:
+	btn = InlineKeyboardButton(i, callback_data=i)
+	btns.append(btn)
+
+langs_btn.add(*btns)
+
+#SEND LINK
+def reklama_creator(user_id):
+	send_link = InlineKeyboardMarkup()
+	
+	bot_username = "temelar_bot"
+	text = get_lang(user_id, "rek")
+	encoded_text = urllib.parse.quote(text)
+
+	url = f"https://t.me/share/url?url=https://t.me/{bot_username}&text={encoded_text}"
+
+	link_btn = InlineKeyboardButton("🚀 SHARE", url=url)
+
+	send_link.add(link_btn)
+	
+	return send_link

@@ -1,0 +1,25 @@
+{
+    "yana_qaytdi": "<b>👋 Welcome back!\n\nThe bot is already running ✅\n\nChoose a section below 👇</b>",
+    
+    "not_admmin": "You are not an admin 😅",
+    
+    "bot_news": "📻 BOT NEWS",
+    
+    "oboi": "🌅 WALLPAPERS",
+    
+    "help": "<b>🤖 About the bot\n\n🎨 This bot collects the most beautiful and high-quality themes for Telegram.\n\n📂 Inside the bot you can find themes in different categories:\n\n🖤 Dark — modern dark style themes\n\n💖 Anime — beautiful anime-style designs\n\n🐯 Animals — themes with animal images\n\n🤍 Soft — soft and eye-friendly themes\n\n💔 Other — unusual and creative themes\n\n⚡ New themes are constantly being added.\n\n📢 Subscribe to our channel to get the latest themes and bot updates first!</b>",
+    
+    "platform_choice": "<b>❗ CHOOSE PLATFORM</b>",
+    
+    "kat_choice": "<b>🔠 CHOOSE CATEGORY</b>",
+    
+    "theme_kat": "THEME\n\nINSTALL VIA 📲 BUTTON",
+    
+    "sekret": "<b>⏳ Coming soon</b>",
+    
+    "error": "<b>👾 ERROR 👾\n\n1⃣ PLEASE USE THE BUTTONS BELOW\n\n2⃣ RESTART THE BOT USING /start</b>",
+    
+    "rek": "🔥 People keep this hidden…\n\nTry it and share with your friends 😏👇",
+    
+    "lang_update": "<b>🌍 Language successfully changed!\n\nThe bot will now work in your selected language 😊</b>"
+}
