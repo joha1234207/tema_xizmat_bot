@@ -1,3 +1,4 @@
+import os
 
 admin = 7789281265
 TOKEN = os.environ["BOT_TOKEN"]
